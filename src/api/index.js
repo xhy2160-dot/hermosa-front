@@ -1,4 +1,4 @@
-import {get, post,put} from './http.js';
+import {get, post, put, upload} from './http.js';
 
 //auth
 export const loginPost = async (formData) => {
@@ -29,6 +29,18 @@ export const updateCustomerPut = async (formData) => {
 }
 export const getCustomersByQuery = async (query) => {
     return await get('/customers/get-all-by-query',query);
+}
+
+export const getCustomerById = async (id) => {
+    return await get('/customers/',{id});
+}
+
+//records
+export const uploadExcelPost = async  (form)=>{
+    return await upload('/customers/upload-excel', form);
+}
+export const saveCellEditPost=async (payload)=>{
+    return await post('/customers/save-cell-edit', payload);
 }
 //treatments
 export const addTreatmeantPost  = async (formData) => {
@@ -88,6 +100,7 @@ export const storeCreditsGet =async (customerId)=>{
 export const updateCreditsPost = async (data)=>{
     return await post('/store-credits/update', data);
 }
+
 //logs
 export const getPaginatedLogs=async (params)=>{
     return await get('/logs', params);

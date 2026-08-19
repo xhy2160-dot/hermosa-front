@@ -1,6 +1,6 @@
 // stores/customer.js
 import { defineStore } from 'pinia';
-import { api, AddCustomerPost , getCustomersByQuery, updateCustomerPut} from '@/api/index.js';
+import {  AddCustomerPost , getCustomersByQuery, updateCustomerPut,getCustomerById} from '@/api/index.js';
 
 export const useCustomerStore = defineStore('customer', {
     state: () => ({
@@ -29,7 +29,6 @@ export const useCustomerStore = defineStore('customer', {
                 this.loading = false;
             }
         },
-
         async addNewCustomer(data) {
             this.loading = true;
             this.error = null;
@@ -63,13 +62,11 @@ export const useCustomerStore = defineStore('customer', {
             this.loading = true;
             this.error = null;
             try {
-                const response = await api.get(`/customers/${id}`);
-                // FIX: Store the active single customer in state
-                this.customer = response.data.data;
+                this.customer  = await getCustomerById(id);
                 return this.customer;
             } catch (error) {
-                this.error = error.response?.data?.message || error.message;
-                throw error;
+                this.error = error
+                console.log(error);
             } finally {
                 this.loading = false;
             }

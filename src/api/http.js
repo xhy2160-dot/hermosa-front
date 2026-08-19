@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const baseURL = 'http://localhost:3000/api'
-const baseURL = 'https://xoxy.cc/api'
+const baseURL = 'http://localhost:3000/api'
+// const baseURL = 'https://xoxy.cc/api'
 // 1. 创建 axios 实例
 const http = axios.create({
     baseURL: baseURL,
@@ -49,10 +49,8 @@ export const get = (url, params = {}, config = {}) => {
 }
 
 export const post = (url, data = {}, config = {}) => {
-    if(staffName){
-        data.staffName = staffName
-    }
-    return http.post(url, data, config)
+    const payload = staffName ? { ...data, staffName } : data;
+    return http.post(url, payload, config)
 }
 
 export const put = (url, data = {}, config = {}) => {
@@ -69,6 +67,34 @@ export const del = (url, params = {}, config = {}) => {
 export const patch = (url, data = {}, config = {}) => {
     return http.patch(url, data, config)
 }
+
+export const upload = (url, data = {}, config = {}) => {
+    const formData = new FormData();
+
+    Object.keys(data).forEach(key => {
+        const val = data[key];
+        if (val !== undefined && val !== null) {
+            if (Array.isArray(val)) {
+                val.forEach((v, i) => formData.append(`${key}[${i}]`, v));
+            } else {
+                formData.append(key, val);
+            }
+        }
+    });
+
+    if (staffName) {
+        formData.append('staffName', staffName);
+    }
+
+    // ✅ 关键：删除 axios 实例默认的 Content-Type，让浏览器自动设置 multipart boundary
+    return http.post(url, formData, {
+        ...config,
+        headers: {
+            ...config.headers,
+            'Content-Type': undefined   // 覆盖实例默认值，浏览器会自动生成正确的 multipart/form-data; boundary=...
+        }
+    });
+};
 
 // 4. 工具函数：Cookie 操作
 export const getCookie = (name) => {
