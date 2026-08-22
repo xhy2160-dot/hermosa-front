@@ -11,15 +11,24 @@ export const useCustomerStore = defineStore('customer', {
     }),
 
     actions: {
-        resetCustomers()  {
+        // Resets the entire store back to initial values
+        resetState() {
+            this.customers = [];
+            this.customer = {};
+            this.loading = false;
+            this.error = null;
+        },
+
+        resetCustomers() {
             this.customers = [];
         },
+
         async searchCustomers(query) {
+            this.resetState();
             this.loading = true;
-            this.error = null; // Clear previous errors
+            this.error = null;
             try {
-                const response = await getCustomersByQuery( {query});
-                // FIX: Update your store's state so components can watch it reactively
+                const response = await getCustomersByQuery({ query });
                 this.customers = response || [];
                 return this.customers;
             } catch (error) {
@@ -29,7 +38,9 @@ export const useCustomerStore = defineStore('customer', {
                 this.loading = false;
             }
         },
+
         async addNewCustomer(data) {
+            this.resetState();
             this.loading = true;
             this.error = null;
             try {
@@ -41,32 +52,36 @@ export const useCustomerStore = defineStore('customer', {
                 this.error = error.response?.data?.message || error.message;
                 throw error;
             } finally {
-                this.loading = false; // FIX: Ensures loading turns false even if API fails
+                this.loading = false;
             }
         },
 
-        async updateCustomer(data){
+        async updateCustomer(data) {
+            this.resetState();
             this.loading = true;
             this.error = null;
             try {
                 const response = await updateCustomerPut(data);
                 this.customer = response;
                 return response;
-            }catch (error) {
-                this.error = error
+            } catch (error) {
+                this.error = error.response?.data?.message || error.message;
                 throw error;
+            } finally {
+                this.loading = false;
             }
         },
 
         async fetchCustomerById(id) {
+            this.resetState();
             this.loading = true;
             this.error = null;
             try {
-                this.customer  = await getCustomerById(id);
+                this.customer = await getCustomerById(id);
                 return this.customer;
             } catch (error) {
-                this.error = error
-                console.log(error);
+                this.error = error.response?.data?.message || error.message;
+                console.error(error);
             } finally {
                 this.loading = false;
             }

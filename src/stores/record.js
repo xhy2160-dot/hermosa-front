@@ -1,7 +1,7 @@
 // stores/treatment.js
 import { defineStore } from 'pinia';
 import {
-    getAppointmentsByCusId, saveCellEditPost, updateAppointmentPut, uploadExcelPost
+    getRecordsByCusId, saveCellEditPost, updateAppointmentPut, uploadExcelPost
 } from '@/api/index.js';
 
 import {ref} from "vue";
@@ -46,15 +46,17 @@ export const useRecordStore = defineStore('record', () => {
 
     }
 
-    const fetchAppointmentsByCustomerId = async (customerId) => {
+    const fetchRecordsByCustomerId = async (customerId) => {
         if (loading.value) return
         loading.value = true
         try {
-            appointments.value = await getAppointmentsByCusId(customerId)
-            return appointments.value
+            record.value = await getRecordsByCusId(customerId)
+            showToast('Successfully retrieved customer records', 'success')
+            return record.value
 
         } catch (err) {
             console.error('Error fetching appointments:', err)
+            showToast('failed to retrieved customer records', 'error')
         } finally {
             loading.value = false
         }
@@ -91,7 +93,7 @@ export const useRecordStore = defineStore('record', () => {
         total,
         loading,
         hasMore,
-        fetchAppointmentsByCustomerId,
+        fetchRecordsByCustomerId,
         resetLogs
     }
 })

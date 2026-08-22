@@ -9,6 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@univerjs/core": "0.4.1",
+    "@univerjs/design": "0.4.1",
+    "@univerjs/docs": "0.4.1",
+    "@univerjs/docs-ui": "0.4.1",
+    "@univerjs/engine-formula": "0.4.1",
+    "@univerjs/engine-render": "0.4.1",
+    "@univerjs/network": "0.4.1",
+    "@univerjs/rpc": "0.4.1",
+    "@univerjs/sheets": "0.4.1",
+    "@univerjs/sheets-formula": "0.4.1",
+    "@univerjs/sheets-formula-ui": "0.4.1",
+    "@univerjs/sheets-numfmt": "0.4.1",
+    "@univerjs/sheets-ui": "0.4.1",
+    "@univerjs/ui": "0.4.1",
     "ag-grid-community": "^31.0.0",
     "ag-grid-vue3": "^31.0.0",
     "axios": "^1.19.0",
@@ -21,9 +35,13 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@univerjs/vite-plugin": "0.4.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "vite": "^8.0.16",
     "vite-plugin-vue-devtools": "^8.1.2"
+  },
+  "overrides": {
+    "@univerjs/core": "0.4.1"
   },
   "engines": {
     "node": "^22.18.0 || >=24.12.0"

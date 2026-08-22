@@ -3,7 +3,7 @@
     <div class="home-nav__header">
       <div>
         <p class="home-nav__eyebrow">Hermosa</p>
-        <h1 class="home-nav__title">{{greeting}}{{ userName ? `, ${userName}` : '' }}!</h1>
+        <h1 class="home-nav__title">{{ greeting }}{{ userName ? `, ${userName}` : '' }}!</h1>
         <p class="home-nav__subtitle">Where would you like to go?</p>
       </div>
       <div class="home-nav__header-actions">
@@ -19,11 +19,7 @@
     </div>
 
     <div class="home-nav__grid">
-      <NavCard
-          v-for="card in cards"
-          :key="card.to"
-          v-bind="card"
-      />
+      <NavCard v-for="card in cards" :key="card.to" v-bind="card" />
     </div>
   </section>
 </template>
@@ -39,8 +35,8 @@ const authStore = useAuthStore();
 const userName = authStore.user?.name;
 
 const handleLogout = async () => {
-    await authStore.logout();
-    await router.push('/login');
+  await authStore.logout();
+  await router.push('/login');
 };
 
 const greeting = computed(() => {
@@ -92,7 +88,7 @@ const IconUsers = {
 // ── Cards config ──────────────────────────────────────────────
 const cards = [
   {
-    to: '/customer-profile',
+    to: '/customer',
     icon: IconChart,
     label: 'Customers and treatments',
     title: 'Customer Profile',
@@ -253,7 +249,7 @@ const today = computed(() => {
 }
 
 /* Last card spans full width if odd count */
-.home-nav__grid > *:last-child:nth-child(odd) {
+.home-nav__grid>*:last-child:nth-child(odd) {
   grid-column: 1 / -1;
 }
 
@@ -262,7 +258,7 @@ const today = computed(() => {
     grid-template-columns: 1fr;
   }
 
-  .home-nav__grid > *:last-child:nth-child(odd) {
+  .home-nav__grid>*:last-child:nth-child(odd) {
     grid-column: auto;
   }
 

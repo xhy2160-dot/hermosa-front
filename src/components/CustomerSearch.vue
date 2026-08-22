@@ -4,6 +4,7 @@
         v-model="query"
         placeholder="Search name, phone, or email..."
         class="search-input"
+        @focusin="query=''"
     />
     <div v-if="loading" class="hint">Searching...</div>
     <ul v-if="customers.length && !selected" class="results">
@@ -53,7 +54,7 @@ const selectCx = (c) => {
 </script>
 
 <style scoped>
-.search-box { position: relative; }
+.search-box { position: relative; margin-top: 7px; }
 .search-input {
   width: 100%; padding: 10px 14px; font-size: 15px;
   border: 1px solid #ddd; border-radius: 8px;

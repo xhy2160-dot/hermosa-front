@@ -37,10 +37,13 @@ export const getCustomerById = async (id) => {
 
 //records
 export const uploadExcelPost = async  (form)=>{
-    return await upload('/customers/upload-excel', form);
+    return await post('/customers/upload-excel', form);
 }
 export const saveCellEditPost=async (payload)=>{
     return await post('/customers/save-cell-edit', payload);
+}
+export const getRecordsByCusId = async (customerId) => {
+    return await get('/customers/get-records-by-customerId',{customerId});
 }
 //treatments
 export const addTreatmeantPost  = async (formData) => {
@@ -68,9 +71,7 @@ export const updateAppointmentPut = async (formdata) => {
 export const appointmentsByTreatmentIdGet = async (treatmentId) => {
     return await get('/appointments/get-all-by-treatmentId',{treatmentId});
 }
-export const getAppointmentsByCusId = async (customerId) => {
-    return await get('/appointments/get-all-by-customerId',{customerId});
-}
+
 
 //rooms
 export const getAllRooms = async () => {

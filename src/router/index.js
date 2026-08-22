@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from "@/views/Home.vue";
-import {useAuthStore} from "@/stores/auth.js";
+import { useAuthStore } from "@/stores/auth.js";
 
 
 const routes = [
@@ -18,9 +18,9 @@ const routes = [
         component: () => import('@/views/Login.vue') // Lazy loading
     },
     {
-        path: '/customer-profile',
+        path: '/customer',
         name: 'Customer Profile',
-        component: () => import('@/views/TreatmentManagement.vue'),// Lazy loading
+        component: () => import('@/views/Customer.vue'),// Lazy loading
         meta: { requiresAuth: true }
     },
     {
